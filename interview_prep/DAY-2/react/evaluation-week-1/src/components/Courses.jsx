@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 function Courses(){
     const navigate=useNavigate()
 
-    const[search,setSearch]=useState(" ")
+    const[search,setSearch]=useState("")
+    const[searchTerm,setSearchTerm]=useState("")
     const courses=[
         {id:1,title:"basic",category:"frontend",duration:"6 weeks",price:"$50"},
     {id:2,title:"basic",category:"backend",duration:"4 weeks",price:"$70"},
@@ -12,8 +13,12 @@ function Courses(){
 {id:4,title:"advance",category:"react",duration:"8 weeks",price:"$40"},
 {id:5,title:"advance",category:"frontend",duration:"6 weeks",price:"$80"}]
     
-   const filtered=courses.filter(courses=>courses.title.toLowerCase().includes(search.toLowerCase()))
+   const filtered=courses.filter(course=>course.title.toLowerCase().includes(searchTerm.toLowerCase()))
   
+   const handleSearch = () => {
+        setSearchTerm(search)
+    }
+
     return(
         <>
         <div>
@@ -24,15 +29,16 @@ function Courses(){
                value={search}
                onChange={(e)=>setSearch(e.target.value)}/>
 
-         {filtered.map(course=>(
+        <button onClick={handleSearch} style={{marginLeft:"10px"}}>Search</button>
+
+        {filtered.map(course=>(
             <div key={course.id}>
                 <h3>{course.title}</h3>
-                <p>Category{course.category}</p>
-                <p>Duration{course.duration}</p>
-                <p>Price:{course.price}</p>
-
+                <p>Category: {course.category}</p>
+                <p>Duration: {course.duration}</p>
+                <p>Price: {course.price}</p>
             </div>
-         ))}
+        ))}
         
     </div>
 
